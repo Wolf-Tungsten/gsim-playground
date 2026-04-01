@@ -14,7 +14,30 @@ DRAMSIM3_HOME="${SCRIPT_DIR}/DRAMsim3"
 
 # Default workload
 DEFAULT_WORKLOAD="${SCRIPT_DIR}/workload/_49458_0.264720_.zstd"
-WORKLOAD="${1:-${DEFAULT_WORKLOAD}}"
+
+# Parse arguments
+MAX_INSTR=""
+WORKLOAD_ARG=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --max-instr)
+            if [[ -n "$2" && "$2" != --* ]]; then
+                MAX_INSTR="$2"
+                shift 2
+            else
+                echo "Error: --max-instr requires a value"
+                exit 1
+            fi
+            ;;
+        *)
+            WORKLOAD_ARG="$1"
+            shift
+            ;;
+    esac
+done
+
+WORKLOAD="${WORKLOAD_ARG:-${DEFAULT_WORKLOAD}}"
 
 # Setup logging
 LOG_DIR="${SCRIPT_DIR}/logs"
@@ -65,9 +88,15 @@ fi
 # Run XiangShan emulator
 cd "${NOOP_HOME}"
 
+MAX_INSTR_ARG=""
+if [[ -n "${MAX_INSTR}" ]]; then
+    MAX_INSTR_ARG="--max-instr ${MAX_INSTR}"
+fi
+
 python3 scripts/xiangshan.py \
     --emulator gsim \
     --with-dramsim3 \
     --dramsim3 "${DRAMSIM3_HOME}" \
     --trace-fst \
+    ${MAX_INSTR_ARG} \
     "${WORKLOAD}"
