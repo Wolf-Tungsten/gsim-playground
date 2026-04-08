@@ -1,3 +1,5 @@
 workload/
 logs/
 artifacts/
+build/
+.cache/

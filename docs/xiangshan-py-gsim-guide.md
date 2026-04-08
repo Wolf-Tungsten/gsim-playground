@@ -479,6 +479,11 @@ python3 scripts/xiangshan.py \
    - 检查 NEMU 库版本是否匹配
    - 使用 `--no-diff` 临时禁用 difftest 进行调试
 
+6. **GSIM 与 Verilator 在同一 workload 上行为不一致**
+   - 如果 `--no-diff` 后 GSIM 仍然在 DUT 内部断言或提早进入异常路径，优先怀疑 GSIM 生成模型的时序语义问题，而不是先怀疑 difftest
+   - 当前已定位到一类寄存器链语义错误：`REG <= x; REG_1 <= REG;` 在 GSIM 生成 C++ 中可能被压缩一拍
+   - 详细分析见 [gsim_firrtl_semantics_bug_analysis.md](./gsim_firrtl_semantics_bug_analysis.md)
+
 ---
 
 ## 参考资料
