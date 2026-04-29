@@ -46,6 +46,8 @@ The generated FST file can be opened directly in GTKWave, or converted with `fst
 
 For `XiangShan/difftest`, the current local code change that should be reviewed by difftest maintainers is:
 
+* GSIM branch: `dev-waveform-support`
+* GSIM HEAD: `292b51f747357a22990d609cab797517cf004ebe` (`292b51f merge: deadloop fix and waveform support`)
 * Branch: `grh/dev-gsim-waveform-support`
 * HEAD: `c7a43c95bd9f9212f20c9419c10c8bb9aa839150` (`c7a43c95 feat: add gsim waveform support`)
 * File: `XiangShan/difftest/src/test/csrc/gsim/gsim.cpp`
